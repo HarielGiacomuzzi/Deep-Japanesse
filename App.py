@@ -4,16 +4,12 @@ from keras.layers import Dense, Dropout, Flatten
 from keras.preprocessing.image import ImageDataGenerator
 from keras.callbacks import ModelCheckpoint
 import load_data
-import sys
-import os.path
-
-sys.path.append(os.path.abspath("."))
 
 def train(X_train, X_test, Y_train, Y_test,
-          weights_location='../checkpoint/model.h5',
-          json_location='../checkpoint/model.json',
-          checkpoint_location='../checkpoint/weights.hdf5',
-          log_dir='../logs'):
+          weights_location='./checkpoint/model.h5',
+          json_location='./checkpoint/model.json',
+          checkpoint_location='./checkpoint/weights.hdf5',
+          log_dir='./logs'):
     classes = 956
     img_rows, img_cols = 32, 32
 
@@ -76,7 +72,7 @@ def train(X_train, X_test, Y_train, Y_test,
     # compila o modelo e inicia o treinamento
     model.summary()
 
-    with open(json_location, 'w') as f:
+    with open(json_location, 'w+') as f:
         f.write(model.to_json())
         print "model saved !"
 
@@ -87,7 +83,7 @@ def train(X_train, X_test, Y_train, Y_test,
     model.save_weights(weights_location)
 
     model.fit(X_train, Y_train,
-              batch_size=32,
+              batch_size=256,
               epochs=300,
               verbose=1,
               validation_data=(X_test, Y_test),
