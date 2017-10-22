@@ -10,7 +10,7 @@ import os
 
 sys.path.append(os.path.abspath("./"))
 
-def load( test_split=0.2, dataset_location='../data/ETL8G_{:02d}', dict_location='../data/dict.csv' ):
+def load( test_split=0.2, dataset_location='../data/ETL8G_{:02d}', dict_location='./data/dict.csv' ):
     # variaveis auxiliares
     classes = 956
     img_rows, img_cols = 32, 32

@@ -55,7 +55,7 @@ def train(X_train, X_test, Y_train, Y_test,
 
     # cria o callback para fazer os logs do tensorboard
     tensorboard_callback = keras.callbacks.TensorBoard(log_dir=log_dir,
-                                histogram_freq=40,
+                                histogram_freq=1,
                                 batch_size=512,
                                 write_graph=True,
                                 write_grads=True,
@@ -86,7 +86,7 @@ def train(X_train, X_test, Y_train, Y_test,
 
     model.fit(X_train, Y_train,
               batch_size=512,
-              epochs=400,
+              epochs=35,
               verbose=1,
               validation_data=(X_test, Y_test),
               callbacks=[tensorboard_callback, checkpoint_callback])
