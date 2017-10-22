@@ -36,25 +36,27 @@ def train(X_train, X_test, Y_train, Y_test,
 
     # define as camadas da rede neural
     model.add(Conv2D(32, kernel_size=(3, 3),activation='relu',input_shape=input_shape))
-    model.add(Conv2D(32, (3, 3), activation='relu'))
+    model.add(Conv2D(64, (3, 3), activation='relu'))
     model.add(MaxPooling2D(pool_size=(2, 2)))
     model.add(Dropout(0.5))
 
     model.add(Conv2D(64, (3, 3), activation='relu'))
-    model.add(Conv2D(64, (3, 3), activation='relu'))
+    model.add(Conv2D(128, (3, 3), activation='relu'))
     model.add(MaxPooling2D(pool_size=(2, 2)))
     model.add(Dropout(0.3))
 
     model.add(Flatten())
 
-    model.add(Dense(128, activation='relu'))
+    model.add(Dense(256, activation='relu'))
     model.add(Dropout(0.5))
+    model.add(Dense(512, activation='relu'))
+    model.add(Dropout(0.2))
     model.add(Dense(classes, activation='softmax'))
 
     # cria o callback para fazer os logs do tensorboard
     tensorboard_callback = keras.callbacks.TensorBoard(log_dir=log_dir,
-                                histogram_freq=1,
-                                batch_size=32,
+                                histogram_freq=40,
+                                batch_size=1024,
                                 write_graph=True,
                                 write_grads=True,
                                 write_images=True,
@@ -83,8 +85,8 @@ def train(X_train, X_test, Y_train, Y_test,
     model.save_weights(weights_location)
 
     model.fit(X_train, Y_train,
-              batch_size=256,
-              epochs=300,
+              batch_size=1024,
+              epochs=400,
               verbose=1,
               validation_data=(X_test, Y_test),
               callbacks=[tensorboard_callback, checkpoint_callback])
